@@ -12,7 +12,12 @@ gpg --list-keys
 
 ## Export public Keys
 ```command
-gpg --armor --output {name}.asc --export "{e-mail}"
+gpg --armor --output {filename}.asc --export "{e-mail}"
+```
+
+## Import public Keys
+```command
+gpg --import {filename}.asc
 ```
 
 ## Export private Keys
@@ -24,8 +29,12 @@ gpg --armor --output {name}.asc --export-secret-keys "{e-mail}"
 ```command
 gpg -e -r "{e-mail}" {filename}.txt 
 ```
+#### or
+```command
+gpg --encrypt --recipient "{e-mail}" {filename}.txt 
+```
 
 ## Test Decrypt
 ```command
-gpg {filename}.txt 
+gpg --output {filename}.txt  --decrypt {filename}.txt.pgp
 ```
