@@ -27,24 +27,24 @@ class GpgApplicationTests {
   @SneakyThrows
   @DisplayName("Should Encrypt File Successfully")
   void shouldEncryptFileSuccessfully() {
-    var inputStream = new FileInputStream("src/main/resources/keys/public_key.asc");
+    var inputStreamKey = new FileInputStream("src/main/resources/keys/public_key.asc");
     var pathFile = new FileInputStream("src/test/java/resource/example.txt");
-    var key = keyService.loadPublicKey(inputStream);
+    var pgpPublicKey = keyService.loadPublicKey(inputStreamKey);
     var outputStream = new FileOutputStream("example.txt.pgp");
     System.out.println(tempPath);
-    encryptionService.encrypt(pathFile, outputStream, key);
+    encryptionService.encrypt(pathFile, outputStream, pgpPublicKey);
   }
 
   @Test
   @SneakyThrows
   @DisplayName("Should Decrypt File Success")
   void shouldDecryptFileSuccess() {
-    var inputStream = new FileInputStream("src/main/resources/keys/private_key.asc");
+    var inputStreamKey = new FileInputStream("src/main/resources/keys/private_key.asc");
     var pathFile = new FileInputStream("example.txt.pgp");
     var stringPassphrase = "test";
     var charsPassphrase = stringPassphrase.toCharArray();
-    var key = keyService.loadPrivateKey(inputStream, charsPassphrase);
+    var pgpPrivateKey = keyService.loadPrivateKey(inputStreamKey, charsPassphrase);
     var outputStream = new FileOutputStream("test.txt");
-    decryptionService.decrypt(pathFile, outputStream, key);
+    decryptionService.decrypt(pathFile, outputStream, pgpPrivateKey);
   }
 }
