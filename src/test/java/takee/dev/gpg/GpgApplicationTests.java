@@ -1,8 +1,5 @@
 package takee.dev.gpg;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.file.Path;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import takee.dev.gpg.service.DecryptionService;
 import takee.dev.gpg.service.EncryptionService;
 import takee.dev.gpg.service.KeyService;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 @SpringBootTest
 class GpgApplicationTests {
@@ -21,8 +21,6 @@ class GpgApplicationTests {
 
   @Autowired private DecryptionService decryptionService;
 
-  Path tempPath;
-
   @Test
   @SneakyThrows
   @DisplayName("Should Encrypt File Successfully")
@@ -31,7 +29,6 @@ class GpgApplicationTests {
     var pathFile = new FileInputStream("src/test/java/resource/example.txt");
     var pgpPublicKey = keyService.loadPublicKey(inputStreamKey);
     var outputStream = new FileOutputStream("example.txt.pgp");
-    System.out.println(tempPath);
     encryptionService.encrypt(pathFile, outputStream, pgpPublicKey);
   }
 
